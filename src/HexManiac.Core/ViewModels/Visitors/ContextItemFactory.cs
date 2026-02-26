@@ -216,7 +216,7 @@ namespace HavenSoft.HexManiac.Core.ViewModels.Visitors {
 
       public void Visit(ErrorPCS pcs, byte data) => Visit((PCS)null, data);
 
-      public void Visit(Ascii ascii, byte data) => Results.AddRange(GetFormattedChildren());
+      public void Visit(DataFormats.Ascii ascii, byte data) => Results.AddRange(GetFormattedChildren());
 
       public void Visit(Braille braille, byte data) => Results.AddRange(GetFormattedChildren());
 

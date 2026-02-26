@@ -3004,7 +3004,7 @@ namespace HavenSoft.HexManiac.Core.ViewModels {
          var element = this[point.X, point.Y];
          var underEdit = element.Format as UnderEdit;
          if (currentText.StartsWith(DirectiveMarker.ToString()) && currentText.Count(c => c == DirectiveMarker) == 1) {
-            if (underEdit.OriginalFormat is PCS || underEdit.OriginalFormat is Ascii) {
+            if (underEdit.OriginalFormat is PCS || underEdit.OriginalFormat is DataFormats.Ascii) {
                // if we're in a text cell, don't allow directives.
             } else {
                result = CompleteDirectiveEdit(point, currentText);

@@ -92,7 +92,7 @@ namespace HavenSoft.HexManiac.Core.ViewModels.Visitors {
 
       public void Visit(ErrorPCS pcs, byte data) { }
 
-      public void Visit(Ascii ascii, byte data) { }
+      public void Visit(DataFormats.Ascii ascii, byte data) { }
 
       public void Visit(Braille braille, byte data) { }
 

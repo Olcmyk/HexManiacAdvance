@@ -22,7 +22,7 @@ namespace HavenSoft.HexManiac.Core.Models.Runs {
       public AsciiRun(IDataModel model, int start, int length, SortedSpan<int> pointerSources = null) : base(start, pointerSources) => (this.model, Length) = (model, length.LimitToRange(1, 1000));
 
       public override IDataFormat CreateDataFormat(IDataModel data, int index) {
-         return new Ascii(Start, index - Start, ((char)data[index]).ToString());
+         return new HavenSoft.HexManiac.Core.ViewModels.DataFormats.Ascii(Start, index - Start, ((char)data[index]).ToString());
       }
 
       protected override BaseRun Clone(SortedSpan<int> newPointerSources) => new AsciiRun(model, Start, Length, newPointerSources);
