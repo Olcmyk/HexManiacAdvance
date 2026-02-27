@@ -732,13 +732,20 @@ Use `special2 variable name` when doing an action that has a result.
       public bool IsPublicRelease {
          get {
             var assembly = Assembly.GetExecutingAssembly();
-            var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            var location = assembly.Location;
+            if (string.IsNullOrEmpty(location)) return true;
+            var fvi = FileVersionInfo.GetVersionInfo(location);
             return fvi.FilePrivatePart == 0;
          }
       }
       public MetadataInfo() {
          var assembly = Assembly.GetExecutingAssembly();
-         var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+         var location = assembly.Location;
+         if (string.IsNullOrEmpty(location)) {
+            VersionNumber = "0.0.0";
+            return;
+         }
+         var fvi = FileVersionInfo.GetVersionInfo(location);
          VersionNumber = $"{fvi.FileMajorPart}.{fvi.FileMinorPart}.{fvi.FileBuildPart}";
          if (fvi.FilePrivatePart != 0) VersionNumber += "." + fvi.FilePrivatePart;
       }
