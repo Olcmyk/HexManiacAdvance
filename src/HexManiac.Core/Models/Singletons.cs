@@ -19,18 +19,28 @@ namespace HavenSoft.HexManiac.Core.Models {
    /// Shared resources that involve an expensive setup, (so we only want to do it once) but then cannot be edited after being initialized.
    /// </summary>
    public class Singletons {
-      private const string TableReferenceFileName = "resources/tableReference.txt";
-      private const string TableReferenceFileNameItalian = "resources/tableReference.it.txt";
-      private const string ConstantReferenceFileName = "resources/constantReference.txt";
-      private const string ConstantReferenceFileNameItalian = "resources/constantReference.it.txt";
-      private const string ThumbReferenceFileName = "resources/armReference.txt";
-      private const string ScriptReferenceFileName = "resources/scriptReference.txt";
-      private const string BattleScriptReferenceFileName = "resources/battleScriptReference.txt";
-      private const string AnimationScriptReferenceFileName = "resources/animationScriptReference.txt";
-      private const string BattleAIScriptReferenceFileName = "resources/battleAIScriptReference.txt";
-      private const string ScriptReferenceDocumetationFileName = "resources/scriptReference.md";
-      private const string DocReferenceFileName = "resources/docReference.txt";
-      private const string PythonUtilityFileName = "resources/hma.py";
+      private static string GetResourcePath(string relativePath) {
+         var assemblyLocation = Assembly.GetExecutingAssembly().Location;
+         if (string.IsNullOrEmpty(assemblyLocation)) {
+            // Fallback to current directory if assembly location is not available
+            return relativePath;
+         }
+         var assemblyDir = Path.GetDirectoryName(assemblyLocation);
+         return Path.Combine(assemblyDir, relativePath);
+      }
+
+      private static string TableReferenceFileName => GetResourcePath("resources/tableReference.txt");
+      private static string TableReferenceFileNameItalian => GetResourcePath("resources/tableReference.it.txt");
+      private static string ConstantReferenceFileName => GetResourcePath("resources/constantReference.txt");
+      private static string ConstantReferenceFileNameItalian => GetResourcePath("resources/constantReference.it.txt");
+      private static string ThumbReferenceFileName => GetResourcePath("resources/armReference.txt");
+      private static string ScriptReferenceFileName => GetResourcePath("resources/scriptReference.txt");
+      private static string BattleScriptReferenceFileName => GetResourcePath("resources/battleScriptReference.txt");
+      private static string AnimationScriptReferenceFileName => GetResourcePath("resources/animationScriptReference.txt");
+      private static string BattleAIScriptReferenceFileName => GetResourcePath("resources/battleAIScriptReference.txt");
+      private static string ScriptReferenceDocumetationFileName => GetResourcePath("resources/scriptReference.md");
+      private static string DocReferenceFileName => GetResourcePath("resources/docReference.txt");
+      private static string PythonUtilityFileName => GetResourcePath("resources/hma.py");
 
       public IMetadataInfo MetadataInfo { get; }
       public IReadOnlyDictionary<string, GameReferenceTables> GameReferenceTables { get; }
