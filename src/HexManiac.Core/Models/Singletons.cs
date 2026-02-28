@@ -25,8 +25,24 @@ namespace HavenSoft.HexManiac.Core.Models {
             // Fallback to current directory if assembly location is not available
             return relativePath;
          }
+
          var assemblyDir = Path.GetDirectoryName(assemblyLocation);
-         return Path.Combine(assemblyDir, relativePath);
+
+         // Try multiple locations to find resources:
+         // 1. Same directory as assembly (development)
+         var path1 = Path.Combine(assemblyDir, relativePath);
+         if (File.Exists(path1)) return path1;
+
+         // 2. Two levels up (PyInstaller bundle: meowth/binaries/macos -> Contents)
+         var path2 = Path.Combine(assemblyDir, "..", "..", relativePath);
+         if (File.Exists(path2)) return Path.GetFullPath(path2);
+
+         // 3. Three levels up (alternative bundle structure)
+         var path3 = Path.Combine(assemblyDir, "..", "..", "..", relativePath);
+         if (File.Exists(path3)) return Path.GetFullPath(path3);
+
+         // Fallback to relative path
+         return relativePath;
       }
 
       private static string TableReferenceFileName => GetResourcePath("resources/tableReference.txt");
