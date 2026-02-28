@@ -29,7 +29,7 @@ namespace HavenSoft.HexManiac.Core.Models {
          var assemblyDir = Path.GetDirectoryName(assemblyLocation);
 
          // Try multiple locations to find resources:
-         // 1. Same directory as assembly (development)
+         // 1. Same directory as assembly
          var path1 = Path.Combine(assemblyDir, relativePath);
          if (File.Exists(path1)) return path1;
 
@@ -40,6 +40,14 @@ namespace HavenSoft.HexManiac.Core.Models {
          // 3. Three levels up (alternative bundle structure)
          var path3 = Path.Combine(assemblyDir, "..", "..", "..", relativePath);
          if (File.Exists(path3)) return Path.GetFullPath(path3);
+
+         // 4. Four levels up (development: src/MeowthBridge/bin/Release/net8.0 -> project root)
+         var path4 = Path.Combine(assemblyDir, "..", "..", "..", "..", relativePath);
+         if (File.Exists(path4)) return Path.GetFullPath(path4);
+
+         // 5. Five levels up
+         var path5 = Path.Combine(assemblyDir, "..", "..", "..", "..", "..", relativePath);
+         if (File.Exists(path5)) return Path.GetFullPath(path5);
 
          // Fallback to relative path
          return relativePath;
